@@ -7,7 +7,8 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity; 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,6 +61,16 @@ public class DepartmentController {
 		return response;
 	}
 	
+	@DeleteMapping("delete-dept/{did}")
+	public ResponseEntity<Department> deleteDept(@PathVariable(name = "did") String departmentId) {
+		Department deptToBeDeleted = departmentService.deleteDepartment(departmentId);
+		HttpStatus status = HttpStatus.OK;
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("message", "Department added successfully!");
+		ResponseEntity<Department> response = new ResponseEntity<Department>(deptToBeDeleted, headers, status);
+		return response;
+	}
+	
 //	@GetMapping("get-dept-by-name/{dname}")
 //	public ResponseEntity<List<Department>> getDeptName(@PathVariable(name = "dname") String departmentName) {
 //		List<Department> deptList = departmentService.getDepartmentByName(departmentName);
@@ -71,6 +82,7 @@ public class DepartmentController {
 //	}
 
 }
+
 
 
 
